@@ -14,6 +14,11 @@ export class UsersController {
   async signup (@Body() authDto: AuthDTO.SignUp) {
     const {userId, userName, email, password} = authDto;
     
+    const hasUserId = await this.usersService.findbyId(userId);
+    if(hasUserId){
+      throw new ConflictException('이미 사용중인 아이디 입니다.');
+    }
+
     const userEntity = this.usersService.createUser(authDto);
 
     return '회원가입성공';
