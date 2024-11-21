@@ -20,6 +20,14 @@ export class UsersService {
     return await this.userRepository.save(userEntity);
   }
 
+  async findbyId(userId: string){
+    return await this.userRepository.findOne({
+      where: {
+        userId,
+      }
+    })
+  }
+
   findAll() {
     return `This action returns all users`;
   }
