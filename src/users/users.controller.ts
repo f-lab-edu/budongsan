@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, ConflictException } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, 
+    ConflictException, UseGuards, Req,ParseIntPipe } from '@nestjs/common';
 import { UsersService } from './users.service';
 import { AuthDTO } from 'src/auth/dto/auth.dto';
-import { userDto } from './dto/user.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
+import { JwtAuthGuard } from 'src/auth/security/passport.jwt';
 
 @Controller('users')
 export class UsersController {
@@ -24,22 +25,30 @@ export class UsersController {
     return '회원가입성공';
   }
 
+  @UseGuards(JwtAuthGuard)
+  @Get('/')
+  async getProfile(@Req() req: any){
+    const user = req.user;
+    return user;
+  }
+  
+
   @Get()
   findAll() {
     return this.usersService.findAll();
   }
 
-  @Get(':id')
-  findOne(@Param('id') id: string) {
-    return this.usersService.findOne(+id);
+  @Get('/userNo')
+  findOne(@Param('userNo', ParseIntPipe) userNo: number) {
+    return this.usersService.findOne(userNo);
   }
 
-  @Patch(':id')
-  update(@Param('id') id: string, @Body() updateUserDto: UpdateUserDto) {
-    return this.usersService.update(+id, updateUserDto);
+  @Patch('/userNo')
+  update(@Param('userNo', ParseIntPipe) userNo: number, @Body() updateUserDto: UpdateUserDto) {
+    return this.usersService.update(userNo, updateUserDto);
   }
 
-  @Delete(':id')
+  @Delete('/id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }
