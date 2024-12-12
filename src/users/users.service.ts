@@ -28,12 +28,24 @@ export class UsersService {
     })
   }
 
+  async findbyUserNo(userNo: number){
+     return await this.userRepository.findOne({
+        where:{
+          userNo,
+        }
+     })
+  }
+
   findAll() {
     return `This action returns all users`;
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOne(userNo: number) {
+    return this.userRepository.findOne({
+      where:{
+        userNo,
+      }
+   })
   }
 
   update(id: number, updateUserDto: UpdateUserDto) {
