@@ -25,12 +25,12 @@ export class UsersController {
     return '회원가입성공';
   }
 
-  @UseGuards(JwtAuthGuard)
-  @Get('/')
-  async getProfile(@Req() req: any){
-    const user = req.user;
-    return user;
-  }
+  // @UseGuards(JwtAuthGuard)
+  // @Get('/')
+  // async getProfile(@Req() req: any){
+  //   const user = req.user;
+  //   return user;
+  // }
   
 
   @Get()
@@ -38,17 +38,17 @@ export class UsersController {
     return this.usersService.findAll();
   }
 
-  @Get('/userNo')
+  @Get('/:userNo')
   findOne(@Param('userNo', ParseIntPipe) userNo: number) {
     return this.usersService.findOne(userNo);
   }
 
-  @Patch('/userNo')
+  @Patch('/:userNo')
   update(@Param('userNo', ParseIntPipe) userNo: number, @Body() updateUserDto: UpdateUserDto) {
     return this.usersService.update(userNo, updateUserDto);
   }
 
-  @Delete('/id')
+  @Delete('/:id')
   remove(@Param('id') id: string) {
     return this.usersService.remove(+id);
   }

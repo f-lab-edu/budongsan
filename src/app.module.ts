@@ -15,20 +15,22 @@ import { AuthModule } from './auth/auth.module';
     ],
     isGlobal: true,
   }),
-    UsersModule,
     TypeOrmModule.forRoot({
       type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '1234',
-      database: 'conn_test',
+      host: process.env.DATABASE_HOST,
+      port: parseInt(process.env.DATABASE_PORT),
+      username: process.env.DATABASE_USERNAME,
+      password: process.env.DATABASE_PASSWORD,
+      database: process.env.DATABASE_DBNAME,
       entities: [__dirname + `/**/*.entity{.ts,.js}`],
       synchronize: false
     }),
+    UsersModule,
     AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService, ],
+  providers: [AppService],
 })
-export class AppModule {}
+export class AppModule {
+  
+}
