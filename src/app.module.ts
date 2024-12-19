@@ -5,30 +5,27 @@ import { ConfigModule } from '@nestjs/config';
 import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
+import { ormConfig } from 'orm.config';
 
 @Module({
-   imports: [
-   ConfigModule.forRoot({
-    envFilePath: [
-      (process.env.NODE_ENV === 'production') ? '.production.env'
-       : (process.env.NODE_ENV === 'stage') ? '.stage.env' : '.development.env'
-    ],
-    isGlobal: true,
-  }),
-    UsersModule,
-    TypeOrmModule.forRoot({
-      type: 'mysql',
-      host: 'localhost',
-      port: 3306,
-      username: 'root',
-      password: '1234',
-      database: 'conn_test',
-      entities: [__dirname + `/**/*.entity{.ts,.js}`],
-      synchronize: false
+  imports: [
+    ConfigModule.forRoot({
+      envFilePath: [
+        process.env.NODE_ENV === 'production'
+          ? '.production.env'
+          : process.env.NODE_ENV === 'stage'
+            ? '.stage.env'
+            : '.development.env'
+      ],
+      isGlobal: true
     }),
+    TypeOrmModule.forRootAsync({
+      useFactory: ormConfig
+    }),
+    UsersModule,
     AuthModule
   ],
   controllers: [AppController],
-  providers: [AppService, ],
+  providers: [AppService]
 })
-export class AppModule {}
+export class AppModule { }
