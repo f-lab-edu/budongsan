@@ -6,6 +6,7 @@ import { UsersModule } from './users/users.module';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ormConfig } from 'orm.config';
+import { KakaoMapModule } from './kakaomap/map.module';
 
 @Module({
   imports: [
@@ -23,7 +24,8 @@ import { ormConfig } from 'orm.config';
       useFactory: ormConfig
     }),
     UsersModule,
-    AuthModule
+    AuthModule,
+    KakaoMapModule
   ],
   controllers: [AppController],
   providers: [AppService]
