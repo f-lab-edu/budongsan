@@ -12,15 +12,15 @@ export class UsersService {
   constructor(
     @InjectRepository(UserEntity)
     private userRepository: Repository<UserEntity>,
-  ){}
-  
+  ) { }
+
   async createUser(authDTO: AuthDTO.SignUp) {
     const userEntity = await this.userRepository.create(authDTO);
-    
+
     return await this.userRepository.save(userEntity);
   }
 
-  async findbyId(userId: string){
+  async findbyId(userId: string) {
     return await this.userRepository.findOne({
       where: {
         userId,
@@ -29,18 +29,22 @@ export class UsersService {
   }
 
   findAll() {
-    return `This action returns all users`;
+    throw new Error('Not implemented yet')
   }
 
-  findOne(id: number) {
-    return `This action returns a #${id} user`;
+  findOne(userNo: number) {
+    return this.userRepository.findOne({
+      where: {
+        userNo,
+      }
+    })
   }
+  //TODOs
+  // update(id: number, updateUserDto: UpdateUserDto) {
+  //   return `This action updates a #${id} user`;
+  // }
 
-  update(id: number, updateUserDto: UpdateUserDto) {
-    return `This action updates a #${id} user`;
-  }
-
-  remove(id: number) {
-    return `This action removes a #${id} user`;
-  }
+  // remove(id: number) {
+  //   return `This action removes a #${id} user`;
+  // }
 }
