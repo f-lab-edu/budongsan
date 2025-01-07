@@ -6,6 +6,8 @@ import { UsersService } from './users.service';
 import { AuthDTO } from 'src/auth/dto/auth.dto';
 import { UpdateUserDto } from './dto/update-user.dto';
 import { JwtAuthGuard } from 'src/auth/security/passport.jwt';
+import { UserEntity } from './entities/user.entity';
+import { User } from './user.decorator';
 
 @Controller('users')
 export class UsersController {
@@ -29,8 +31,7 @@ export class UsersController {
 
   @UseGuards(JwtAuthGuard)
   @Get('/')
-  async getProfile(@Req() req: any) {
-    const user = req.user;
+  async getProfile(@User() user: UserEntity) {
     return user;
   }
 
