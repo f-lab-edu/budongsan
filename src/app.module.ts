@@ -7,6 +7,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { AuthModule } from './auth/auth.module';
 import { ormConfig } from 'orm.config';
 import { KakaoMapModule } from './kakaomap/map.module';
+import { BoardsModule } from './boards/boards.module';
 
 @Module({
   imports: [
@@ -25,7 +26,8 @@ import { KakaoMapModule } from './kakaomap/map.module';
     }),
     UsersModule,
     AuthModule,
-    KakaoMapModule
+    KakaoMapModule,
+    BoardsModule
   ],
   controllers: [AppController],
   providers: [AppService]
