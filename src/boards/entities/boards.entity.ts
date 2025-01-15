@@ -1,18 +1,35 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
 
 @Entity('boards')
 export class BoardsEntity {
     @PrimaryGeneratedColumn()
-    id: number;
+    boardId: number;
 
     @Column()
     title: string;
 
-    public static validate(title: string): boolean {
-        const isValid = title;
-        if (!isValid) {
+    @Column()
+    contents: string;
+
+    @CreateDateColumn()
+    createdAt: Date;
+
+    @UpdateDateColumn()
+    updatedAt: Date;
+
+    @DeleteDateColumn()
+    deletedAt: Date;
+
+    public static validate(title: string, contents: string): boolean {
+        const isTitleValid = title;
+        const isContentsValid = contents;
+
+        if (!isTitleValid) {
             throw new Error('The title cannot be blank.');
+        } else if (!isContentsValid) {
+            throw new Error('The contents cannot be blank.');
         }
+
         return true;
     }
 }

@@ -19,8 +19,8 @@ describe('BoardsController', () => {
   it('should be defined', () => {
     expect(controller).toBeDefined();
     const createBoardDto = {
-      id: 1,
-      title: 'z'
+      title: 'z',
+      contents: 'scripts'
     };
     controller.create(createBoardDto);
     expect(service.create).toHaveBeenCalled;
