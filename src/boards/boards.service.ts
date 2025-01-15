@@ -14,7 +14,6 @@ export class BoardsService {
     ) { }
 
     async create(createBoardDto: CreateBoardDto) {
-        console.log('hello again', createBoardDto);
         const boardEntity = await this.boardsRepository.create(createBoardDto);
 
         return await this.boardsRepository.save(boardEntity);
