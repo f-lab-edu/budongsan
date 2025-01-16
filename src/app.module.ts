@@ -8,6 +8,7 @@ import { AuthModule } from './auth/auth.module';
 import { ormConfig } from 'orm.config';
 import { KakaoMapModule } from './kakaomap/map.module';
 import { BoardsModule } from './boards/boards.module';
+import { ScrapModule } from './scrap/scrap.module';
 
 @Module({
   imports: [
@@ -27,7 +28,8 @@ import { BoardsModule } from './boards/boards.module';
     UsersModule,
     AuthModule,
     KakaoMapModule,
-    BoardsModule
+    BoardsModule,
+    ScrapModule
   ],
   controllers: [AppController],
   providers: [AppService]

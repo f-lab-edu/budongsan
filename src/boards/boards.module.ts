@@ -5,7 +5,10 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { BoardsEntity } from './entities/boards.entity';
 
 @Module({
-  imports: [TypeOrmModule.forFeature([BoardsEntity])],
+  imports: [
+    TypeOrmModule.forFeature([BoardsEntity]),
+    BoardsModule],
+  exports: [BoardsService],
   controllers: [BoardsController],
   providers: [BoardsService]
 })
