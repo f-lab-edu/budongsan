@@ -118,6 +118,12 @@ web_modules/
 .production.env
 .stage.env
 
+#typeORM environment files
+orm.config.ts
+
+#jwt Configuration files
+jwt.config.ts
+
 # parcel-bundler cache (https://parceljs.org/)
 .cache
 .parcel-cache
