@@ -1,4 +1,5 @@
-import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, CreateDateColumn, UpdateDateColumn, DeleteDateColumn, OneToMany } from "typeorm";
+import { ScrapEntity } from "src/scrap/scrap.entity";
 
 @Entity('boards')
 export class BoardsEntity {
@@ -19,6 +20,9 @@ export class BoardsEntity {
 
     @DeleteDateColumn()
     deletedAt: Date;
+
+    @OneToMany(() => ScrapEntity, scrap => scrap.board)
+    bridges: ScrapEntity[];
 
     public static validate(title: string, contents: string): boolean {
         const isTitleValid = title;
