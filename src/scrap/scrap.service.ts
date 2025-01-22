@@ -14,24 +14,35 @@ export class ScrapService {
         private scrapRepository: Repository<ScrapEntity>) { }
 
     async createScrap(user, postId) {
+        const queryRunner = this.dataSource.createQueryRunner();
+
         const userNo = user.payload.userNo;
         const userForSave = new UserEntity;
         userForSave.userNo = userNo;
 
-        await this.dataSource.manager.save(userForSave);
-
         const board = new BoardsEntity;
         board.boardId = postId;
-
-        await this.dataSource.manager.save(board);
 
         const scrap = new ScrapEntity;
         scrap.userNo = userNo;
         scrap.boardId = postId;
 
-        await this.dataSource.manager.save(scrap);
+        await queryRunner.connect();
+        await queryRunner.startTransaction();
 
-        return '스크랩 되었습니다.';
+        try {
+            await queryRunner.manager.save(userForSave);
+            await queryRunner.manager.save(board);
+            await queryRunner.manager.save(scrap);
+
+            await queryRunner.commitTransaction();
+
+            return '스크랩 되었습니다.';
+        } catch (err) {
+            await queryRunner.rollbackTransaction();
+        } finally {
+            await queryRunner.release();
+        }
     }
 
     async deleteScrap(user, boardId) {
